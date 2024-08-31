@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: express-k8s-servicemonitor
+  labels:
+    release: prometheus  # Adjust this label based on your Prometheus instance
+    app: prometheus
+spec:
+  jobLabel: job
+  selector:
+    matchLabels:
+      app: express-k8s-app
+      job: node-api
+  endpoints:
+    - port: web  # This should match the name of the port in your Service spec
+      path: /metrics
+      interval: 10s  # Adjust the scrape interval as needed
+
