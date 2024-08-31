@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-k8s-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: express-k8s-app
+  template:
+    metadata:
+      labels:
+        app: express-k8s-app
+    spec:
+      containers:
+      - name: express-k8s-app
+        image: docker.io/rinshadr/express-k8s-app:latest
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+

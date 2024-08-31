@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-k8s-service
+  labels:
+    job: node-api
+    app:  express-k8s-app
+spec:
+  type: ClusterIP
+  selector:
+    app: express-k8s-app
+  ports:
+    - name: web
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
